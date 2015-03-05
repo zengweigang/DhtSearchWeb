@@ -37,11 +37,12 @@
 					<div id="center-logo">
 						<img src="./assets/logo.png" alt="konka" class="logo">
 					</div>
-					<form id="search-form" action="servlet/SearchServlet" method="get">
+					<form id="search-form" action="./servlet/SearchServlet"
+						method="get">
 						<div id="search-box">
 							<input type="text" id="search" name="searchkeywords"
-								height="60xp" placeholder="你想看什么电影？搜吧..."> <input
-								type="submit" id="btnSearch" value="搜 索" class="blue">
+								height="60xp"> <input type="submit" id="btnSearch"
+								value="搜 索" class="blue">
 
 						</div>
 					</form>
@@ -55,7 +56,7 @@
 								return false;
 							}
 							var url = '/DhtSearch/servlet/SearchServlet?searchkeywords='
-									+ encodeURIComponent(query);
+									+ encodeURIComponent(encodeURIComponent(query));
 							window.location = url;
 							return false;
 						};

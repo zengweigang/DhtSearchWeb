@@ -17,7 +17,8 @@ public class MongodbUtilProvider {
 
 		if (mongodbUtil == null) {
 			try {
-				Mongo m = new Mongo("localhost", 27017);
+//				Mongo m = new Mongo("localhost", 27017);
+				Mongo m = new Mongo("198.98.102.169", 27017);
 				DB db = m.getDB("test");
 //				db.dropDatabase();
 				mongodbUtil = new MongodbUtil(db);

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.rmi.server.LogStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class TorrentInfo implements TorrentConstantKey {
 	@SuppressWarnings("unchecked")
 	private void parser(BEncodedInputStream bEncodedInputStream) throws IOException, BDecodingException, BTypeException {
 		BMap bMap = (BMap) bEncodedInputStream.readElement();
+		KLog.println(bMap);
 		String encoding = null;// 编码方式 utf-8
 		if (bMap.containsKey(ENCODING)) {
 			encoding = bMap.getString(ENCODING);
@@ -182,5 +184,5 @@ public class TorrentInfo implements TorrentConstantKey {
 		}
 		return builder.toString();
 	}
- 
+
 }

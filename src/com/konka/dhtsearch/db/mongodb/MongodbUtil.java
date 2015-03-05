@@ -42,14 +42,14 @@ public class MongodbUtil {
 		DBCollection collection = getDBCollection(object.getClass());
 		DBObject dbobject = objectToDBObject(object);
 		collection.insert(dbobject);
-		// DBCursor dbCursor = collection.find();
-		// System.out.println(dbobject);
-		// for (; dbCursor.hasNext();) {
-		// DBObject dbObject2 = dbCursor.next();
-		// if (dbObject2.containsField("lists")) {
-		// System.out.println("是集合吗=" + dbObject2);
-		// }
-		// }
+		DBCursor dbCursor = collection.find();
+		System.out.println(dbobject);
+		for (; dbCursor.hasNext();) {
+			DBObject dbObject2 = dbCursor.next();
+			if (dbObject2.containsField("lists")) {
+				System.out.println("是集合吗=" + dbObject2);
+			}
+		}
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class MongodbUtil {
 		if (collectionAnno != null && collectionAnno.value().trim().length() != 0) {
 			collectionName = collectionAnno.value();
 		} else {
-			collectionName = clazz.getName().replace(".", "_");// mongodb不支挄1�7'.'的名秄1�7
+			collectionName = clazz.getName().replace(".", "_");// mongodb不支挄1�7'.'的名秄1�7
 		}
 		return collectionName;
 	}
@@ -90,7 +90,7 @@ public class MongodbUtil {
 	}
 
 	/**
-	 * 获取扄1�7有的字段
+	 * 获取扄1�7有的字段
 	 * 
 	 * @param clazz
 	 * @return
@@ -103,7 +103,7 @@ public class MongodbUtil {
 	}
 
 	/**
-	 * 将�1�7�转成db支持的类垄1�7
+	 * 将�1�7�转成db支持的类垄1�7
 	 * 
 	 * @param object
 	 * @return
@@ -130,7 +130,7 @@ public class MongodbUtil {
 	}
 
 	/**
-	 * 普�1�7�对象转成DbObject
+	 * 普�1�7�对象转成DbObject
 	 * 
 	 * @param object
 	 * @return
@@ -175,7 +175,7 @@ public class MongodbUtil {
 	 * @param q
 	 *            跟新条件
 	 * @param v
-	 *            设置新�1�7�1�7
+	 *            设置新�1�7�1�7
 	 * @param isOverWrite
 	 *            ture 覆盖全部值， false 值修改设定的部分，之前的不变
 	 */
@@ -257,7 +257,7 @@ public class MongodbUtil {
 			Object value = dbo.get(name);//
 			if (value != null) {
 				Type type = f.getGenericType();
-				value = valueDeserial(type, value);// 解析得到真实倄1�7
+				value = valueDeserial(type, value);// 解析得到真实倄1�7
 			}
 			Method set = DbUtil.getFieldSetMethod(clazz, f);
 			set.invoke(o, value);
@@ -266,12 +266,12 @@ public class MongodbUtil {
 	}
 
 	/**
-	 * 将�1�7�翻译成为对豄1�7
+	 * 将�1�7�翻译成为对豄1�7
 	 * 
 	 * @param type
-	 *            对象的类垄1�7
+	 *            对象的类垄1�7
 	 * @param object
-	 *            mongodb的对豄1�7
+	 *            mongodb的对豄1�7
 	 * 
 	 * @return 返回转换后的对象
 	 * @throws Exception
@@ -305,6 +305,18 @@ public class MongodbUtil {
 		BasicDBObject where = new BasicDBObject("analysised", DhtInfoStateCode.NO_DOWNLOAD);
 
 		return find(DhtInfo_MongoDbPojo.class, where, limit);
+	}
+
+	public List<DhtInfo_MongoDbPojo> getHaveAnalyticedDhtInfos() throws Exception {
+		BasicDBObject where = new BasicDBObject("analysised", DhtInfoStateCode.DOWNLOADSUCCESS_AND_PARSING_SUCCESS);
+
+		return find(DhtInfo_MongoDbPojo.class, where, 0);
+	}
+
+	public DBCursor getHaveAnalyticedDhtInfosOfDBCursor() throws Exception {
+		BasicDBObject where = new BasicDBObject("analysised", DhtInfoStateCode.DOWNLOADSUCCESS_AND_PARSING_SUCCESS);
+
+		return findDBCursor(DhtInfo_MongoDbPojo.class, where, 0);
 	}
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StoredField;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
@@ -27,12 +28,11 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo;
 import com.konka.dhtsearch.db.mongodb.MongodbUtil;
+import com.konka.dhtsearch.db.mongodb.MongodbUtilProvider;
 import com.konka.dhtsearch.parser.TorrentInfo;
 import com.konka.dhtsearch.util.FilterUtil;
-import com.mongodb.DB;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
 import com.mongodb.util.JSON;
 
 public class LuceneUtils {
@@ -47,50 +47,58 @@ public class LuceneUtils {
 	// 数据字段
 	public static final String TORRENTINFO_FIELD = "torrentInfo";
 
-	public static final int PAGE_COUNT = 201;// 每页显示的数
+	public static final int PAGE_COUNT = 10;// 每页显示的数
 
 	public static final int HITSPERPAGE_COUNT = 20000;// 查询结构总数
-
+static int count=0;
 	// DhtInfo_MongoDbPojo
 	public static void createIndex() throws Exception {
 
 		MongodbUtil mongodbUtil = getMongodbUtil();
-		DBCursor cursor = mongodbUtil.findDBCursor(DhtInfo_MongoDbPojo.class);
-
+//		DBCursor cursor = mongodbUtil.findDBCursor(DhtInfo_MongoDbPojo.class);
+		DBCursor cursor =mongodbUtil.getHaveAnalyticedDhtInfosOfDBCursor();
 		Directory index = FSDirectory.open(new File(LUCENE_FILEPATH));
 
 		Analyzer analyzer = new IKAnalyzer();// 这里要换成ik
 		// StandardAnalyzer analyzer = new StandardAnalyzer();// 这里要换成ik
 		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_4_9, analyzer);
 		IndexWriter indexWriter = new IndexWriter(index, config);
-		indexWriter.deleteAll();
+//		indexWriter.deleteAll();
 		System.out.println(cursor.count());
 		while (cursor.hasNext()) {
 			Document doc = new Document();
 
 			DBObject object = cursor.next();
-			System.out.println(object);
+//			System.out.println(object);
 			DhtInfo_MongoDbPojo dhtInfo_MongoDbPojo = mongodbUtil.loadOne(DhtInfo_MongoDbPojo.class, object);
 			TorrentInfo torrentInfo = dhtInfo_MongoDbPojo.getTorrentInfo();
 			if (torrentInfo == null || FilterUtil.checkVideoType(torrentInfo)) {// 检测文件类型
 				continue;
 			}
-
+			System.out.println(object.get(TORRENTINFO_FIELD).toString());
 			doc.add(new StringField(INFO_HASH_FIELD, dhtInfo_MongoDbPojo.getInfo_hash(), Field.Store.YES));// StringField不参加分词
-			doc.add(new StringField(TORRENTINFO_FIELD, object.get(TORRENTINFO_FIELD).toString(), Field.Store.YES));// StringField不参加分词
-			doc.add(new TextField(KEYWORD, torrentInfo.getNeedSegmentationString(), Field.Store.YES));// 多文件的文件名
+			doc.add(new StoredField(TORRENTINFO_FIELD, object.get(TORRENTINFO_FIELD).toString()));// StringField不参加分词
+			doc.add(new TextField(KEYWORD, torrentInfo.getNeedSegmentationString(), Field.Store.NO));// 多文件的文件名
 
-			indexWriter.addDocument(doc);
-			System.out.println("ok");
+//			try {
+				indexWriter.addDocument(doc);
+				count++;
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			System.out.println("ok");
+			
 		}
+		System.out.println("完毕"+count);
 		cursor.close();
 		indexWriter.close();
 	}
 
 	public static MongodbUtil getMongodbUtil() throws UnknownHostException {
-		Mongo mongoClient = new Mongo();
-		DB db = mongoClient.getDB("test");
-		MongodbUtil mongodbUtil = new MongodbUtil(db);
+//		Mongo mongoClient = new Mongo();
+//		DB db = mongoClient.getDB("test");
+//		MongodbUtil mongodbUtil = new MongodbUtil(db);
+		MongodbUtil mongodbUtil=MongodbUtilProvider.getMongodbUtil();
 		return mongodbUtil;
 	}
 
@@ -108,18 +116,20 @@ public class LuceneUtils {
 
 		BooleanClause.Occur[] clauses = { BooleanClause.Occur.SHOULD };
 		String[] searchFields = { KEYWORD };
-		String[] searchFields11 = { searchString };
+//		String[] searchFields11 = { searchString };
 		// new QueryParser
 		// QueryParser qp = new QueryParser(Version.LUCENE_40, fieldName, analyzer);
 		// Query qp = new QueryParser(Version.LUCENE_34, fieldName, analyzer);
-		Query query = MultiFieldQueryParser.parse(Version.LUCENE_4_9, searchFields11, searchFields, clauses, new IKAnalyzer());
+		Query query = MultiFieldQueryParser.parse(Version.LUCENE_4_9, searchString, searchFields, clauses, new IKAnalyzer());
 		// IKAnalyzer.
 		IndexReader reader = DirectoryReader.open(index);
 		IndexSearcher searcher = new IndexSearcher(reader);
 		// TopScoreDocCollector.
 		TopScoreDocCollector collector = TopScoreDocCollector.create(HITSPERPAGE_COUNT, true);
 		searcher.search(query, collector);
-
+//		StringField: 基础文本字段，可指定是否索引
+//		StoredField: 仅存储不索引（也就是不能搜索、查询只能跟着文档取出来看）
+//		TextField  : 会在这上面应用分词器，用来做全文检索的
 		ScoreDoc[] hits = collector.topDocs((page - 1) * PAGE_COUNT, PAGE_COUNT).scoreDocs; // 进行分页过滤
 		// 4. display results
 		System.out.println("Found " + hits.length + " hits.");
@@ -127,6 +137,8 @@ public class LuceneUtils {
 		List<DhtInfo_MongoDbPojo> dhtInfo_MongoDbPojos = new ArrayList<DhtInfo_MongoDbPojo>();
 		for (int i = 0; i < hits.length; ++i) {
 			Document document = searcher.doc(hits[i].doc);
+			System.out.println(document.get(TORRENTINFO_FIELD));
+			System.out.println(document.get(INFO_HASH_FIELD));
 			DBObject object = (DBObject) JSON.parse(document.get(TORRENTINFO_FIELD));
 			System.out.println(object);
 			if (object == null)
@@ -148,7 +160,7 @@ public class LuceneUtils {
 
 	public static void main(String[] args) throws Exception {
 		args = new String[] { "index", "com_konka_dhtsearch_db_models_DhtInfo_MongoDbPojo", "fileName" };
-		args = new String[] { "Femme" };
+		args = new String[] { "让子弹飞" };
 		if (args[0].equals("index")) {
 			createIndex();
 		} else {
