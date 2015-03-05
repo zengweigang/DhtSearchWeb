@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.rmi.server.LogStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ import com.konka.dhtsearch.util.StringUtil;
 @MongoCollection
 public class TorrentInfo implements TorrentConstantKey {
 	private String name;// 文件名称
-	private long filelenth;// 文件大小 单位 byte
+	private long filelenth;// 文件大小 单位 byte(总文件大小)
 	private long creattime;// 创建时间 creation date
 	private List<MultiFile> multiFiles;
 	private boolean singerFile = true;// 是否是单文件 如果是多文件，文件放假multiFiles中
@@ -115,8 +114,7 @@ public class TorrentInfo implements TorrentConstantKey {
 						if (multiFilemap.containsKey(LENGTH)) {
 							long length = multiFilemap.getLong(LENGTH);
 							multiFile.setSingleFileLength(length);
-							// KLog.println("LENGTH=" + length);
-
+							filelenth += length;
 						}
 						multiFiles.add(multiFile);
 					}

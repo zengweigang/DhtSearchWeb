@@ -19,6 +19,7 @@ import com.konka.dhtsearch.util.TextUtils;
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 5355659034287728426L;
 	public static final String PAGE = "page", SEARCHKEYWORDS = "searchkeywords";
+	public static final String TOTAL = "total";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,36 +53,38 @@ public class SearchServlet extends HttpServlet {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-//		PrintWriter out = response.getWriter();
+		// PrintWriter out = response.getWriter();
 		if (!ArrayUtils.isEmpty(dhtInfo_MongoDbPojos)) {
-//			out.println(company);
-//			try {
-//				for (DhtInfo_MongoDbPojo dhtInfo_MongoDbPojo : dhtInfo_MongoDbPojos) {
-//					out.println(dhtInfo_MongoDbPojo.getInfo_hash() + "--------");
-//					out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getName() + "--------");
-//					out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getFilelenth() + "--------");
-//					out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getCreattime() + "--------");
-////					out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getMultiFiles().size() + "--------");
-//					out.println(dhtInfo_MongoDbPojo.getPeerIp() + "--------");
-//					out.println(dhtInfo_MongoDbPojo.getAnalysised() + "--------");
-//					out.println("<br>");
-//					if (!dhtInfo_MongoDbPojo.getTorrentInfo().isSingerFile()) {
-//						List<MultiFile> lists = dhtInfo_MongoDbPojo.getTorrentInfo().getMultiFiles();
-//						for (MultiFile multiFile : lists) {
-//							out.println(multiFile.getPath());
-//						}
-//					}
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
+			// out.println(company);
+			// try {
+			// for (DhtInfo_MongoDbPojo dhtInfo_MongoDbPojo : dhtInfo_MongoDbPojos) {
+			// out.println(dhtInfo_MongoDbPojo.getInfo_hash() + "--------");
+			// out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getName() + "--------");
+			// out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getFilelenth() + "--------");
+			// out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getCreattime() + "--------");
+			// // out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getMultiFiles().size() + "--------");
+			// out.println(dhtInfo_MongoDbPojo.getPeerIp() + "--------");
+			// out.println(dhtInfo_MongoDbPojo.getAnalysised() + "--------");
+			// out.println("<br>");
+			// if (!dhtInfo_MongoDbPojo.getTorrentInfo().isSingerFile()) {
+			// List<MultiFile> lists = dhtInfo_MongoDbPojo.getTorrentInfo().getMultiFiles();
+			// for (MultiFile multiFile : lists) {
+			// out.println(multiFile.getPath());
+			// }
+			// }
+			// }
+			// } catch (Exception e) {
+			// e.printStackTrace();
+			// }
 			request.setAttribute("dhtInfo_MongoDbPojos", dhtInfo_MongoDbPojos);
+			request.setAttribute(TOTAL, "128");
 			request.getRequestDispatcher("/SearchResult.jsp").forward(request, response);
-//		} else {
-//			out.println("没有找到");
+		} else {
+			PrintWriter out = response.getWriter();
+			out.println("没有找到");
+			out.flush();
+			out.close();
 		}
-//		out.flush();
-//		out.close();
 
 	}
 

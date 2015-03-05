@@ -1,6 +1,7 @@
-<%@ page language="java" import="java.util.*"
+<%@ page language="java" import="java.util.*,java.net.URLDecoder"
 	contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -30,7 +31,9 @@
 				method="get">
 				<a href="http://www.btbook.net/" title="Btbook home"> <img
 					src="../assets/logo_40.png" alt="Btbook" class="nav-logo"> </a> <input
-					type="text" id="search" title="Search" value="纸牌屋"
+					type="text" id="search" title="Search"
+					value="<%=URLDecoder.decode(request.getParameter("searchkeywords"),
+					"utf-8")%>"
 					autocomplete="off" name="q"> <input type="submit"
 					id="btnSearch" value="搜 索" class="blue">
 			</form>
@@ -43,45 +46,29 @@
 						document.getElementById("search").focus();
 						return false;
 					}
-					var url = '/search/' + encodeURIComponent(query) + '.html';
+					var url = '/DhtSearch/servlet/SearchServlet?searchkeywords='
+							+ encodeURIComponent(encodeURIComponent(query));
 					window.location = url;
 					return false;
 				};
 			</script>
 		</div>
 
-		<div id="sort-bar">
-			<b>创建时间</b> <a
-				href="http://www.btbook.net/search/%e7%ba%b8%e7%89%8c%e5%b1%8b/3-2.html">文件大小</a>
-			<a
-				href="http://www.btbook.net/search/%e7%ba%b8%e7%89%8c%e5%b1%8b/3-3.html">下载热度</a>
-			<a
-				href="http://www.btbook.net/search/%e7%ba%b8%e7%89%8c%e5%b1%8b/3-4.html">最近下载</a>
-
-		</div>  
-
 		<div id="content">
 			<div id="wall">
 
 				<div class="search-statu">
-					<span>大约 298 条结果。搜索"<b>纸牌屋</b>"相关的 <a
-						href="http://www.gugemei.com/s?q=%e7%ba%b8%e7%89%8c%e5%b1%8b"
-						target="_blank">网页</a> <a
-						href="http://www.gugemei.com/image?q=%e7%ba%b8%e7%89%8c%e5%b1%8b"
-						target="_blank">图片</a> <a
-						href="http://www.gugemei.com/pan?q=%e7%ba%b8%e7%89%8c%e5%b1%8b"
-						target="_blank">网盘</a> </span> <span><a
-						href="http://www.btbook.net/rss/%e7%ba%b8%e7%89%8c%e5%b1%8b.xml"
-						target="_blank" type="application/rss+xml"> <img
-							src="../assets/icon_rss.gif" alt="rss"> </a> </span>
+					<span>大约 <%=request.getAttribute("total")%> 条结果。</span>
 				</div>
 				<c:forEach items="${dhtInfo_MongoDbPojos}" var="user" varStatus="vs">
 					<div class="search-item">
 						<div class="item-title">
 							<a href="magnet:?xt=urn:btih:<c:out value="${user.info_hash}"/>"
-								target="_blank"><c:out value="${user.torrentInfo.name}"/></a>
+								target="_blank"><c:out value="${user.torrentInfo.name}" />
+							</a>
 						</div>
 						<div class="item-list">
+
 							<p>[纸牌屋.第二季].House.of.Cards.2014.S02.E13.BluRay.720p.x264.AC3-CMCT.mkv
 								1.8 GB</p>
 							<p>[纸牌屋.第二季].House.of.Cards.2014.S02.E09.BluRay.720p.x264.AC3-CMCT.mkv
@@ -93,7 +80,11 @@
 
 						<div class="item-bar">
 							<span class="cpill fileType1">视频</span> <span>创建时间： <b>2个月前</b>
-							</span><span>文件大小： <b class="cpill yellow-pill"><c:out value="${user.torrentInfo.filelenth}"/></b> </span><span>下载热度：<b>57</b>
+							</span><span>文件大小： <b class="cpill yellow-pill"><c:out
+										value="${user.torrentInfo.filelenth}" /> </b> </span><span>文件总数：fn:length(<c:out value="${user.torrentInfo.multiFiles}" />)<b>
+										
+										
+										</b>
 							</span> <a href="magnet:?xt=urn:btih:<c:out value="${user.info_hash}"/>">磁力链接</a>
 						</div>
 					</div>
