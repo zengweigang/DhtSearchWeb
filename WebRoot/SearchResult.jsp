@@ -81,7 +81,7 @@
 						<div class="item-bar">
 							<span class="cpill fileType1">视频</span> <span>创建时间： <b>2个月前</b>
 							</span><span>文件大小： <b class="cpill yellow-pill"><c:out
-										value="${user.torrentInfo.filelenth}" /> </b> </span><span>文件总数：fn:length(<c:out value="${user.torrentInfo.multiFiles}" />)<b>
+										value="${user.torrentInfo.filelenth}" /> </b> </span><span>文件总数：${fn:length(user.torrentInfo.multiFiles)}<b>
 										
 										
 										</b>
