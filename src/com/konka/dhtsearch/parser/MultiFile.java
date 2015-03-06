@@ -1,5 +1,7 @@
 package com.konka.dhtsearch.parser;
 
+import util.Util;
+
 import com.konka.dhtsearch.db.mongodb.MongoCollection;
 
 /**
@@ -28,5 +30,8 @@ public class MultiFile {
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+	public String getFormatSize(){
+		return Util.getFormatSize(singleFileLength);
 	}
 }

@@ -1,13 +1,10 @@
 package com.konka.dhtsearch.db.mongodb;
 
 import java.net.UnknownHostException;
-import java.util.List;
-
 import com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 
 public class MongodbUtilProvider {

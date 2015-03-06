@@ -12,6 +12,8 @@ import org.yaircc.torrent.bencoding.BEncodedInputStream;
 import org.yaircc.torrent.bencoding.BMap;
 import org.yaircc.torrent.bencoding.BTypeException;
 
+import util.Util;
+
 import com.konka.dhtsearch.db.mongodb.MongoCollection;
 import com.konka.dhtsearch.util.KLog;
 import com.konka.dhtsearch.util.StringUtil;
@@ -24,6 +26,13 @@ public class TorrentInfo implements TorrentConstantKey {
 	private List<MultiFile> multiFiles;
 	private boolean singerFile = true;// 是否是单文件 如果是多文件，文件放假multiFiles中
 
+	
+	public String getFormatSize(){
+		return Util.getFormatSize(filelenth);
+	}
+	public String getFormatCreatTime(){
+		return Util.getFormatCreatTime(creattime*1000);
+	}
 	public String getName() {
 		return name;
 	}

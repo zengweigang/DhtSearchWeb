@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.konka.dhtsearch.db.luncene.LuceneUtils;
 import com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo;
-import com.konka.dhtsearch.parser.MultiFile;
 import com.konka.dhtsearch.util.ArrayUtils;
 import com.konka.dhtsearch.util.TextUtils;
 
@@ -78,6 +77,7 @@ public class SearchServlet extends HttpServlet {
 			// }
 			request.setAttribute("dhtInfo_MongoDbPojos", dhtInfo_MongoDbPojos);
 			request.setAttribute(TOTAL, "128");
+			request.setAttribute(PAGE, pagecount);
 			request.getRequestDispatcher("/SearchResult.jsp").forward(request, response);
 		} else {
 			PrintWriter out = response.getWriter();

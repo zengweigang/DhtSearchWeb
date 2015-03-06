@@ -307,7 +307,7 @@ public class KadReceiveServer implements Runnable, DHTConstant {
 					Set<SelectionKey> selectedKeys = selector.selectedKeys();
 					Iterator<SelectionKey> iterator = selectedKeys.iterator();
 					while (iterator.hasNext()) {
-						SelectionKey sk = (SelectionKey) iterator.next();
+						SelectionKey sk = iterator.next();
 						iterator.remove();
 						if (sk.isReadable()) {
 							DatagramChannel datagramChannel = (DatagramChannel) sk
