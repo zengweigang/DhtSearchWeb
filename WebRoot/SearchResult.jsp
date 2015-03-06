@@ -30,59 +30,37 @@
 	href="http://www.btbook.net/static/img/favicon.ico">
 <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="../js/jqPaginator.js" type="text/javascript"></script>
-<script type="text/javascript">
-	document.getElementById("search").focus();
-	document.forms[0].onsubmit = function(e) {
-		e.preventDefault();
-		var query = document.getElementById("search").value;
-		if (!query) {
-			document.getElementById("search").focus();
-			return false;
-		}
-		var url = '/DhtSearch/servlet/SearchServlet?searchkeywords='
-				+ encodeURIComponent(encodeURIComponent(query));
-		window.location = url;
-		return false;
-	};
-</script>
+
 </head>
 <body>
-	<script type="text/javascript">
-		$.jqPaginator('#pagination1', {
-			totalPages : 100,
-			visiblePages : 10,
-			currentPage : 3,
-			onPageChange : function(num, type) {
-				$('#p1').text(type + '：' + num);
-			}
-		});
-		$.jqPaginator('#pagination2', {
-			totalPages : 100,
-			visiblePages : 10,
-			currentPage : 3,
-			prev : '<li class="prev"><a href="javascript:;">Previous</a></li>',
-			next : '<li class="next"><a href="javascript:;">Next</a></li>',
-			page : '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-			onPageChange : function(num, type) {
-				$('#p2').text(type + '：' + num);
-			}
-		});
-	</script>
 	<div id="wrapper">
-
 		<div class="header-div">
 			<form class="search-form" action="http://www.btbook.net/search"
 				method="get">
 				<a href="http://www.btbook.net/" title="Btbook home"> <img
 					src="../assets/logo_40.png" alt="Btbook" class="nav-logo"> </a> <input
 					type="text" id="search" title="Search"
-					value="<%=URLDecoder.decode(request.getParameter("searchkeywords"), "utf-8")%>"
+					value=" <%=URLDecoder.decode(request.getParameter("searchkeywords"),
+					"utf-8")%>"
 					autocomplete="off" name="q"> <input type="submit"
 					id="btnSearch" value="搜 索" class="blue">
 			</form>
-
 		</div>
-
+		<script type="text/javascript">
+			document.getElementById("search").focus();
+			document.forms[0].onsubmit = function(e) {
+				e.preventDefault();
+				var query = document.getElementById("search").value;
+				if (!query) {
+					document.getElementById("search").focus();
+					return false;
+				}
+				var url = '/DhtSearch/servlet/SearchServlet?searchkeywords='
+						+ encodeURIComponent(encodeURIComponent(query));
+				window.location = url;
+				return false;
+			};
+		</script>
 		<div id="content">
 			<div id="wall">
 
@@ -131,14 +109,6 @@
 					</div>
 				</c:forEach>
 				<div class="bottom-pager">
-
-					<c:forEach items="${dhtInfo_MongoDbPojos}" var="user" 
-						varStatus="vs">
-						<a
-							href="http://www.btbook.net/search/%e7%ba%b8%e7%89%8c%e5%b1%8b/2-1.html">&lt;</a>
-
-					</c:forEach>
-
 
 					<a
 						href="http://www.btbook.net/search/%e7%ba%b8%e7%89%8c%e5%b1%8b/2-1.html">&lt;</a>
