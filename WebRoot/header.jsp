@@ -16,8 +16,8 @@
 			value="<%=URLDecoder.decode(searchkeywords == null
 					? ""
 					: searchkeywords, "utf-8")%>"
-			autocomplete="off" name="q"> <input type="submit"
-			id="btnSearch" value="搜 索" class="blue">
+			size="25" style="height: 31" autocomplete="off" name="q"> <input
+			type="submit" id="btnSearch" value="搜 索" class="blue">
 	</form>
 </div>
 <script type="text/javascript">
@@ -29,8 +29,7 @@
 			document.getElementById("search").focus();
 			return false;
 		}
-		var url = '/DhtSearch/servlet/SearchServlet?searchkeywords='
-				+ query;
+		var url = '/DhtSearch/servlet/SearchServlet?searchkeywords=' + query;
 		window.location = url;
 		return false;
 	};

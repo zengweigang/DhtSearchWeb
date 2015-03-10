@@ -41,9 +41,9 @@
 					<form id="search-form" action="./servlet/SearchServlet"
 						method="get">
 						<div id="search-box">
-							<input type="text" id="search" name="searchkeywords"
-								height="60xp"> <input type="submit" id="btnSearch"
-								value="搜 索" class="blue">
+							<input type="text" id="search" name="searchkeywords" size="25"
+								style="height: 30"> <input type="submit" id="btnSearch"
+								size="25" style="height: 30" value="搜 索" class="blue">
 
 						</div>
 					</form>

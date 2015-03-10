@@ -3,20 +3,15 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pojo.Page;
 import pojo.PageInfo;
 
 import com.konka.dhtsearch.db.luncene.LuceneSearchResult;
 import com.konka.dhtsearch.db.luncene.LuceneUtils;
-import com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo;
 import com.konka.dhtsearch.util.ArrayUtils;
 import com.konka.dhtsearch.util.TextUtils;
 
@@ -68,7 +63,7 @@ public class SearchServlet extends HttpServlet {
 		System.out.println(path);
 		System.out.println(basePath);
 		if (!ArrayUtils.isEmpty(luceneSearchResult.getLists())) {
-			int pagecount = Math.round((float) total / 10f);
+			int pagecount = Math.round(total / 10f);
 			PageInfo pageInfo = new PageInfo(currentPage, pagecount,basePath,request);
 			pageInfo.addParam(SEARCHKEYWORDS, null);
 			pageInfo.generate();

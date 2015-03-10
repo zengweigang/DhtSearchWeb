@@ -1,14 +1,11 @@
 package com.konka.dhtsearch.db.luncene;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StoredField;
@@ -25,10 +22,6 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
-import org.apache.lucene.search.highlight.Highlighter;
-import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
-import org.apache.lucene.search.highlight.QueryScorer;
-import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -39,7 +32,6 @@ import com.konka.dhtsearch.db.mongodb.MongodbUtil;
 import com.konka.dhtsearch.db.mongodb.MongodbUtilProvider;
 import com.konka.dhtsearch.parser.TorrentInfo;
 import com.konka.dhtsearch.util.FilterUtil;
-import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
@@ -228,21 +220,21 @@ public class LuceneUtils {
 		return null;
 	}
 
-	private static String toHighlighter(Query query, Document doc, String field) {
-		try {
-			SimpleHTMLFormatter simpleHtmlFormatter = new SimpleHTMLFormatter("_","_");
-//			SimpleHTMLFormatter simpleHtmlFormatter = new SimpleHTMLFormatter("<font color\\=\"red\">", "</font>");
-			Highlighter highlighter = new Highlighter(simpleHtmlFormatter, new QueryScorer(query));
-//			System.out.println("doc.get(NAME_FIELD)="+doc.get(NAME_FIELD));
-//			TokenStream tokenStream1 = new IKAnalyzer().tokenStream(NAME_FIELD, new StringReader(doc.get(NAME_FIELD)));
-//			String highlighterStr = highlighter.getBestFragment(tokenStream1, doc.get(field));
-//			return highlighterStr == null ? doc.get(field) : highlighterStr;
-		} catch ( Exception e) {
-			// TODO Auto-generated catch block
-			// logger.error(e.getMessage());
-		}  
-		return null;
-	}
+//	private static String toHighlighter(Query query, Document doc, String field) {
+//		try {
+//			SimpleHTMLFormatter simpleHtmlFormatter = new SimpleHTMLFormatter("_","_");
+////			SimpleHTMLFormatter simpleHtmlFormatter = new SimpleHTMLFormatter("<font color\\=\"red\">", "</font>");
+//			Highlighter highlighter = new Highlighter(simpleHtmlFormatter, new QueryScorer(query));
+////			System.out.println("doc.get(NAME_FIELD)="+doc.get(NAME_FIELD));
+////			TokenStream tokenStream1 = new IKAnalyzer().tokenStream(NAME_FIELD, new StringReader(doc.get(NAME_FIELD)));
+////			String highlighterStr = highlighter.getBestFragment(tokenStream1, doc.get(field));
+////			return highlighterStr == null ? doc.get(field) : highlighterStr;
+//		} catch ( Exception e) {
+//			// TODO Auto-generated catch block
+//			// logger.error(e.getMessage());
+//		}  
+//		return null;
+//	}
 
 	public static void main(String[] args) throws Exception {
 		args = new String[] { "index", "com_konka_dhtsearch_db_models_DhtInfo_MongoDbPojo", "fileName" };

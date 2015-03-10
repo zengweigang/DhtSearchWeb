@@ -13,18 +13,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<link type="text/css" rel="stylesheet"
-	href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><%=searchkeywords%> 磁力链接 - 磁力搜索</title>
 <meta name="keywords" content="磁力链接, 磁力链, 磁力搜索, 磁力链接搜索, BT搜索, 纸牌屋">
 <meta name="description" content="<%=searchkeywords%>的磁力链接">
 <meta name="viewport" content="width=device-width">
-<script type="text/javascript" src="./js/jqPaginator.js"></script>
 
 <link type="text/css" rel="stylesheet" href="../css/default.css">
-<link rel="shortcut icon" type="image/x-icon"
-	href="http://www.btbook.net/static/img/favicon.ico">
+ 
 <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="../js/jqPaginator.js" type="text/javascript"></script>
 <%

@@ -20,8 +20,6 @@
 <meta name="viewport" content="width=device-width">
 
 <link type="text/css" rel="stylesheet" href="../css/default.css">
-<link rel="shortcut icon" type="image/x-icon"
-	href="http://www.btbook.net/static/img/favicon.ico">
 <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="../js/default.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="../css/embed.bluebox.css">

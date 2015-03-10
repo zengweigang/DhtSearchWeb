@@ -93,7 +93,14 @@ public class PageInfo {
 		pageList = new ArrayList<Page>();
 		Page page;
 		int start = currentPage - 5 <= 0 ? 1 : currentPage - 5;
-		int end = start + 9 > totalpage ? totalpage : start + 9;
+		int end ;//= start + 9 > totalpage ? totalpage : start + 9;
+		
+		if(start + 9 > totalpage){
+			end=totalpage;
+			start=totalpage-9;
+		}else{
+			end=start + 9;
+		}
 		if (start > 1) {
 			page = new Page();
 			page.setPageNumber(currentPage - 1);
