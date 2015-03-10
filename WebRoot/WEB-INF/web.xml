@@ -20,10 +20,22 @@
 		<display-name>This is the display name of my J2EE component</display-name>
 		<servlet-name>StartServiceServlet</servlet-name>
 		<servlet-class>servlet.StartServiceServlet</servlet-class>
+		
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>StartServiceServlet</servlet-name>
 		<url-pattern>/servlet/StartServiceServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description>Dht详情页码的servlet</description>
+		<display-name>This is the display name of my J2EE component</display-name>
+		<servlet-name>DetailsServlet</servlet-name>
+		<servlet-class>servlet.DetailsServlet</servlet-class>
+		
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DetailsServlet</servlet-name>
+		<url-pattern>/servlet/DetailsServlet</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

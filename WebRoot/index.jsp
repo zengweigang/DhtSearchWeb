@@ -25,6 +25,7 @@
 <link rel="apple-touch-icon"
 	href="http://www.konka.cn/static/img/konka_apple.jpg">
 <script src="./js/jquery-1.3.2.min.js" type="text/javascript"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 </head>
 
@@ -56,7 +57,7 @@
 								return false;
 							}
 							var url = '/DhtSearch/servlet/SearchServlet?searchkeywords='
-									+ encodeURIComponent(encodeURIComponent(query));
+									+ query;
 							window.location = url;
 							return false;
 						};
@@ -66,12 +67,7 @@
 		</div>
 		<div class="push"></div>
 	</div>
-	<div class="footer">
-		<span>©2016 konka.cn</span> <span><a
-			href="http://www.konka.cn/mobile">移动版</a> | <a
-			href="http://www.konka.cn/online">在线播放</a> | <a
-			href="http://www.konka.cn/about">关于</a> </span>
-	</div>
 
+	<jsp:include page="footer.jsp" />
 </body>
 </html>

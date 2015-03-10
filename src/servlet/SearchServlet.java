@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pojo.Page;
+import pojo.PageInfo;
+
+import com.konka.dhtsearch.db.luncene.LuceneSearchResult;
 import com.konka.dhtsearch.db.luncene.LuceneUtils;
 import com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo;
 import com.konka.dhtsearch.util.ArrayUtils;
@@ -34,9 +39,10 @@ public class SearchServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		// System.out.println(request.getCharacterEncoding());
 		String page = request.getParameter(PAGE);
+		System.out.println("是多少=" + page);
 
 		String searchkeywords = request.getParameter(SEARCHKEYWORDS);
-		int pagecount = TextUtils.isEmpty(page) ? 1 : Integer.parseInt(page);
+		int currentPage = TextUtils.isEmpty(page) ? 1 : Integer.parseInt(page);
 		// URLEncoder.encode("searchkeywords", enc)
 		// String name2 = URLEncoder.encode(你的参数);
 		// 在接受的页面，进行解码，示例如下：
@@ -46,39 +52,30 @@ public class SearchServlet extends HttpServlet {
 		// System.out.println(company);
 		// System.out.println(searchkeywords);
 		// response.sendRedirect(request.getContextPath() + "/SearchResult.jsp");
-		List<DhtInfo_MongoDbPojo> dhtInfo_MongoDbPojos = null;
+		LuceneSearchResult luceneSearchResult = null;
+		int total = 0;
 		try {
-			dhtInfo_MongoDbPojos = LuceneUtils.search(company, pagecount);
+			luceneSearchResult = LuceneUtils.search(company, currentPage);
+			total = luceneSearchResult.getTotal();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+
 		// PrintWriter out = response.getWriter();
-		if (!ArrayUtils.isEmpty(dhtInfo_MongoDbPojos)) {
-			// out.println(company);
-			// try {
-			// for (DhtInfo_MongoDbPojo dhtInfo_MongoDbPojo : dhtInfo_MongoDbPojos) {
-			// out.println(dhtInfo_MongoDbPojo.getInfo_hash() + "--------");
-			// out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getName() + "--------");
-			// out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getFilelenth() + "--------");
-			// out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getCreattime() + "--------");
-			// // out.println(dhtInfo_MongoDbPojo.getTorrentInfo().getMultiFiles().size() + "--------");
-			// out.println(dhtInfo_MongoDbPojo.getPeerIp() + "--------");
-			// out.println(dhtInfo_MongoDbPojo.getAnalysised() + "--------");
-			// out.println("<br>");
-			// if (!dhtInfo_MongoDbPojo.getTorrentInfo().isSingerFile()) {
-			// List<MultiFile> lists = dhtInfo_MongoDbPojo.getTorrentInfo().getMultiFiles();
-			// for (MultiFile multiFile : lists) {
-			// out.println(multiFile.getPath());
-			// }
-			// }
-			// }
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// }
-			request.setAttribute("dhtInfo_MongoDbPojos", dhtInfo_MongoDbPojos);
-			request.setAttribute(TOTAL, "128");
-			request.setAttribute(PAGE, pagecount);
+		String path = request.getContextPath();
+		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()//
+				+ path + request.getServletPath();
+		System.out.println(path);
+		System.out.println(basePath);
+		if (!ArrayUtils.isEmpty(luceneSearchResult.getLists())) {
+			int pagecount = Math.round((float) total / 10f);
+			PageInfo pageInfo = new PageInfo(currentPage, pagecount,basePath,request);
+			pageInfo.addParam(SEARCHKEYWORDS, null);
+			pageInfo.generate();
+			request.setAttribute("pageInfo", pageInfo);
+			request.setAttribute("luceneSearchResult", luceneSearchResult);
 			request.getRequestDispatcher("/SearchResult.jsp").forward(request, response);
+
 		} else {
 			PrintWriter out = response.getWriter();
 			out.println("没有找到");

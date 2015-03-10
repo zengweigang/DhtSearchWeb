@@ -30,6 +30,9 @@ public class TorrentInfo implements TorrentConstantKey {
 	public String getFormatSize(){
 		return Util.getFormatSize(filelenth);
 	}
+//	public String getHighlighterName(){
+//		return getName().replace("", newChar)
+//	}
 	public String getFormatCreatTime(){
 		return Util.getFormatCreatTime(creattime*1000);
 	}
