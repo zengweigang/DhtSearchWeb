@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.konka.dhtsearch.db.luncene.LuceneUtils;
 import com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo;
 
-public class DetailsServlet extends HttpServlet{
+public class DetailsServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5212364653692205765L;
 
@@ -21,17 +21,20 @@ public class DetailsServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	 
-		String info_hash=request.getParameter("info_hash");
+
+		String info_hash = request.getParameter("info_hash");
 		try {
-			DhtInfo_MongoDbPojo dhtInfo_MongoDbPojo=LuceneUtils.searchByInfoHash(info_hash);
-			request.setAttribute("dhtInfo_MongoDbPojo", dhtInfo_MongoDbPojo);
-			request.getRequestDispatcher("/Details.jsp").forward(request, response);
+			DhtInfo_MongoDbPojo dhtInfo_MongoDbPojo = LuceneUtils.searchByInfoHash(info_hash);
+			if (dhtInfo_MongoDbPojo != null) {
+				request.setAttribute("dhtInfo_MongoDbPojo", dhtInfo_MongoDbPojo);
+				request.getRequestDispatcher("/Details.jsp").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/404.jsp").forward(request, response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	@Override

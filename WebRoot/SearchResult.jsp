@@ -1,6 +1,9 @@
-<%@ page language="java"
-	import="java.util.*,java.net.URLDecoder,com.konka.dhtsearch.db.luncene.LuceneSearchResult,com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo"
+<%@ page language="java" import="java.util.*,java.net.URLDecoder"
 	contentType="text/html; charset=utf-8"%>
+<%@ page language="java"
+	import="com.konka.dhtsearch.db.luncene.LuceneSearchResult"%>
+<%@ page language="java"
+	import="com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
@@ -20,7 +23,7 @@
 <meta name="viewport" content="width=device-width">
 
 <link type="text/css" rel="stylesheet" href="../css/default.css">
- 
+
 <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="../js/jqPaginator.js" type="text/javascript"></script>
 <%

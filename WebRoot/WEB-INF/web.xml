@@ -14,13 +14,24 @@
 		<servlet-name>SearchServlet</servlet-name>
 		<url-pattern>/servlet/SearchServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description>android搜索的服务</description>
+		<display-name>This is the display name of my J2EE component</display-name>
+		<servlet-name>androidSearchServlet</servlet-name>
+		<servlet-class>android.AndroidSearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>androidSearchServlet</servlet-name>
+		<url-pattern>/android/AndroidSearchServlet</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<description>启动服务的servlet</description>
 		<display-name>This is the display name of my J2EE component</display-name>
 		<servlet-name>StartServiceServlet</servlet-name>
 		<servlet-class>servlet.StartServiceServlet</servlet-class>
-		
+
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>StartServiceServlet</servlet-name>
@@ -31,7 +42,6 @@
 		<display-name>This is the display name of my J2EE component</display-name>
 		<servlet-name>DetailsServlet</servlet-name>
 		<servlet-class>servlet.DetailsServlet</servlet-class>
-		
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DetailsServlet</servlet-name>

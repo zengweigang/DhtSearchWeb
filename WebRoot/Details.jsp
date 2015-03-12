@@ -103,7 +103,7 @@
 						<div class="panel-body">
 							<p>投诉邮箱：ts@konka.net</p>
 							<p>
-								不想下载？试试<a href="http://www.btbook.net/online" target="_blank">百度云播放</a>！
+								不想下载？试试<a href="http://pan.baidu.com" target="_blank">百度云播放</a>！
 							</p>
 							<p>亲，你造吗？将网页分享给您的基友，下载的人越多速度越快哦！</p>
 						</div>

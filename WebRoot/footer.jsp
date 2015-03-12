@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <div class="footer">
 	<span>©2015 konka.net</span> <span><a
-		href="http://www.btbook.net/mobile">移动</a> | <a
-		href="http://www.btbook.net/online">在线播放</a> | <a
-		href="http://www.btbook.net/about">关于</a> </span>
+		href="http://feibo.konkacloud.cn">移动</a> | <a
+		href="http://feibo.konkacloud.cn">在线播放</a> | <a
+		href="http://feibo.konkacloud.cn">关于</a> </span>
 </div>
