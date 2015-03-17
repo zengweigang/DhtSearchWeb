@@ -38,6 +38,17 @@
 		<url-pattern>/servlet/StartServiceServlet</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<description>创建索引的servlet</description>
+		<display-name>This is the display name of my J2EE component</display-name>
+		<servlet-name>CreateLuceneServlet</servlet-name>
+		<servlet-class>servlet.CreateLuceneServlet</servlet-class>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateLuceneServlet</servlet-name>
+		<url-pattern>/servlet/CreateLuceneServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<description>Dht详情页码的servlet</description>
 		<display-name>This is the display name of my J2EE component</display-name>
 		<servlet-name>DetailsServlet</servlet-name>

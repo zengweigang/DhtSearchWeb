@@ -27,8 +27,8 @@
 <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="../js/jqPaginator.js" type="text/javascript"></script>
 <%
-	LuceneSearchResult luceneSearchResult = (LuceneSearchResult) request.getAttribute("luceneSearchResult");
-	List<DhtInfo_MongoDbPojo> lists = luceneSearchResult.getLists();
+	// 	LuceneSearchResult luceneSearchResult = (LuceneSearchResult) request.getAttribute("luceneSearchResult");
+	// 	List<DhtInfo_MongoDbPojo> lists = luceneSearchResult.getLists();
 %>
 </head>
 <body>
@@ -37,55 +37,40 @@
 		<div id="content">
 			<div id="wall">
 				<div class="search-statu">
-					<span>大约 ${luceneSearchResult.total} 条结果。</span>
+					<span>大约 ${searchResultInfo.total} 条结果。</span>
 				</div>
-				<c:forEach items="${luceneSearchResult.lists}" var="user"
+				<c:forEach items="${searchResultInfo.fileInfos}" var="fileInfo"
 					varStatus="vs">
+					 
 					<div class="search-item">
 						<div class="item-title">
 							<a
-								href="<%=basePath%>servlet/DetailsServlet?info_hash=<c:out value="${user.info_hash}"/>"
-								target="_blank"> <c:out value="${user.torrentInfo.name}" />
-							</a>
+								href="DetailsServlet?info_hash=<c:out value="${fileInfo.info_hash}"/>"
+								target="_blank"> <c:out value="${fileInfo.name}" /> </a>
 						</div>
 						<div class="item-list">
-							<c:choose>
-								<c:when test="${user.torrentInfo.singerFile!=true}">
-									<c:forEach items="${user.torrentInfo.multiFiles}"
-										var="multiFiles" varStatus="vs" end="2">
-										<p>
-											<c:out value="${multiFiles.path}" />
-											<c:out value="${multiFiles.formatSize}" />
-										</p>
-									</c:forEach>
 
-									<c:if test="${fn:length(user.torrentInfo.multiFiles)>3}">
-										<p>......</p>
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<p>
-										<c:out value="${user.torrentInfo.name}" />
-										<c:out value="${user.torrentInfo.filelenth}" />
-									</p>
-								</c:otherwise>
-							</c:choose>
+
+							<c:forEach items="${fileInfo.subfileInfos}" var="subfileinfo"
+								varStatus="vs" end="2">
+								<p>
+									<c:out value="${subfileinfo.name}" />
+									<c:out value="${subfileinfo.subFileSize}" />
+								</p>
+							</c:forEach>
+
+							<c:if test="${fileInfo.subFileCount>3}">
+								<p>......</p>
+							</c:if>
+
 						</div>
 						<div class="item-bar">
 							<span class="cpill fileType1">视频</span> <span>创建时间： <b>
-									<c:out value="${user.torrentInfo.formatCreatTime}" /> </b> </span><span>文件大小：
-								<b class="cpill yellow-pill"> <!-- 								formatSize --> <c:out
-										value="${user.torrentInfo.formatSize}" /> </b> </span><span>文件数：
-
-								<c:choose>
-									<c:when test="${user.torrentInfo.singerFile==true}">
-										<c:out value="1" />
-									</c:when>
-									<c:otherwise>
-									${fn:length(user.torrentInfo.multiFiles)}
-								</c:otherwise>
-								</c:choose> <b> </b> </span> <a
-								href="magnet:?xt=urn:btih:<c:out value="${user.info_hash}"/>">磁力链接</a>
+									<c:out value="${fileInfo.createTime}" /> </b> </span><span>文件大小： <b
+								class="cpill yellow-pill"> <!-- 								formatSize --> <c:out
+										value="${fileInfo.fileSize}" /> </b> </span><span>文件数：${fileInfo.subFileCount}
+								<b> </b> </span> <a
+								href="magnet:?xt=urn:btih:<c:out value="${fileInfo.info_hash}"/>">磁力链接</a>
 						</div>
 					</div>
 				</c:forEach>
