@@ -14,6 +14,7 @@
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,10 +27,7 @@
 
 <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="../js/jqPaginator.js" type="text/javascript"></script>
-<%
-	// 	LuceneSearchResult luceneSearchResult = (LuceneSearchResult) request.getAttribute("luceneSearchResult");
-	// 	List<DhtInfo_MongoDbPojo> lists = luceneSearchResult.getLists();
-%>
+ 
 </head>
 <body>
 	<div id="wrapper">
@@ -49,7 +47,6 @@
 								target="_blank"> <c:out value="${fileInfo.name}" /> </a>
 						</div>
 						<div class="item-list">
-
 
 							<c:forEach items="${fileInfo.subfileInfos}" var="subfileinfo"
 								varStatus="vs" end="2">

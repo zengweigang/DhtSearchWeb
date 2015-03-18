@@ -95,10 +95,6 @@ public class SearchServlet extends HttpServlet {
 			searchResultInfo.setFileInfos(fileInfos);
 			// System.out.println();
 			request.setAttribute("searchResultInfo", searchResultInfo);
-//			PrintWriter out = response.getWriter();
-//			out.println("拿到数据了");
-//			out.flush();
-//			out.close();
 
 			request.getRequestDispatcher("/SearchResult.jsp").forward(request, response);
 

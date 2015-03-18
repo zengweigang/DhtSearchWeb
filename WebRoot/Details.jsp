@@ -14,9 +14,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${dhtInfo_MongoDbPojo.torrentInfo.name} - 磁力搜索</title>
 <meta name="keywords"
-	content="磁力链接, 磁力链, 磁力搜索, 磁力链接搜索, BT搜索, S03E03, House, Cards, 破烂熊, 纸牌屋">
+	content="磁力链接, 磁力链, 磁力搜索, 磁力链接搜索, BT搜索">
 <meta name="description"
-	content="关于[破烂熊][纸牌屋.House.of.Cards.S03E03].mp4的磁力链接, 迅雷链接">
+	content="磁力链接, 磁力链, 磁力搜索, 磁力链接搜索, BT搜索">
 <meta name="viewport" content="width=device-width">
 
 <link type="text/css" rel="stylesheet" href="../css/default.css">
@@ -114,12 +114,6 @@
 				<div class="push"></div>
 			</div>
 		</div>
-	</div>
-	<div class="footer">
-		<span>©2015 Btbook.net</span> <span><a
-			href="http://www.btbook.net/mobile">移动版</a> | <a
-			href="http://www.btbook.net/online">在线播放</a> | <a
-			href="http://www.btbook.net/about">关于</a> </span>
 	</div>
 	<jsp:include page="footer.jsp" />
 
