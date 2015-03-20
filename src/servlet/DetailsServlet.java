@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.konka.dhtsearch.db.luncene.LuceneUtils;
+import com.konka.dhtsearch.db.luncene.LuceneManager;
 import com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo;
 
 public class DetailsServlet extends HttpServlet {
@@ -24,7 +24,7 @@ public class DetailsServlet extends HttpServlet {
 
 		String info_hash = request.getParameter("info_hash");
 		try {
-			DhtInfo_MongoDbPojo dhtInfo_MongoDbPojo = LuceneUtils.searchByInfoHash(info_hash);
+			DhtInfo_MongoDbPojo dhtInfo_MongoDbPojo = LuceneManager.getInstance().searchByInfoHash(info_hash);
 			if (dhtInfo_MongoDbPojo != null) {
 				request.setAttribute("dhtInfo_MongoDbPojo", dhtInfo_MongoDbPojo);
 				request.getRequestDispatcher("/Details.jsp").forward(request, response);

@@ -14,9 +14,10 @@ import pojo.FileInfo;
 import pojo.PageInfo;
 import pojo.SearchResultInfo;
 import pojo.SubFileInfo;
+import util.Util;
 
 import com.konka.dhtsearch.db.luncene.LuceneSearchResult;
-import com.konka.dhtsearch.db.luncene.LuceneUtils;
+import com.konka.dhtsearch.db.luncene.LuceneManager;
 import com.konka.dhtsearch.db.models.DhtInfo_MongoDbPojo;
 import com.konka.dhtsearch.parser.MultiFile;
 import com.konka.dhtsearch.util.ArrayUtils;
@@ -43,7 +44,7 @@ public class SearchServlet extends HttpServlet {
 		LuceneSearchResult luceneSearchResult = null;
 		int total = 0;
 		try {
-			luceneSearchResult = LuceneUtils.search(searchkeywords, currentPage);
+			luceneSearchResult = LuceneManager.getInstance().search(searchkeywords, currentPage);
 			total = luceneSearchResult.getTotal();
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -58,42 +59,7 @@ public class SearchServlet extends HttpServlet {
 			pageInfo.addParam(SEARCHKEYWORDS, null);
 			pageInfo.generate();
 			request.setAttribute("pageInfo", pageInfo);
-			// request.setAttribute("luceneSearchResult", luceneSearchResult);
-
-			List<FileInfo> fileInfos = new ArrayList<FileInfo>();
-			SearchResultInfo searchResultInfo = new SearchResultInfo();
-			searchResultInfo.setTotal(luceneSearchResult.getTotal());
-
-			for (DhtInfo_MongoDbPojo dbPojo : luceneSearchResult.getLists()) {
-				FileInfo fileInfo = new FileInfo();
-				fileInfo.setCreateTime(dbPojo.getTorrentInfo().getFormatCreatTime());
-				fileInfo.setFileSize(dbPojo.getTorrentInfo().getFormatSize());
-				fileInfo.setFileType("视频");
-				fileInfo.setInfo_hash(dbPojo.getInfo_hash());
-				fileInfo.setName(dbPojo.getTorrentInfo().getName());
-				List<SubFileInfo> subFileInfos = new ArrayList<SubFileInfo>();
-				if (dbPojo.getTorrentInfo().isSingerFile()) {
-					fileInfo.setSubFileCount(1);
-					SubFileInfo subFileInfo = new SubFileInfo();
-					subFileInfo.setName(fileInfo.getName());
-					subFileInfo.setSubFileSize(fileInfo.getFileSize());
-					subFileInfos.add(subFileInfo);
-				} else {
-					List<MultiFile> multiFiles = dbPojo.getTorrentInfo().getMultiFiles();
-					fileInfo.setSubFileCount(multiFiles.size());
-					for (MultiFile multiFile : multiFiles) {
-						SubFileInfo subFileInfo = new SubFileInfo();
-						subFileInfo.setName(multiFile.getPath());
-						subFileInfo.setSubFileSize(multiFile.getFormatSize());
-						subFileInfos.add(subFileInfo);
-					}
-					fileInfo.setSubfileInfos(subFileInfos);
-
-				}
-				fileInfos.add(fileInfo);
-			}
-			searchResultInfo.setFileInfos(fileInfos);
-			// System.out.println();
+			SearchResultInfo searchResultInfo = Util.luceneSearchResult2SearchResultInfo(luceneSearchResult);
 			request.setAttribute("searchResultInfo", searchResultInfo);
 
 			request.getRequestDispatcher("/SearchResult.jsp").forward(request, response);
@@ -110,7 +76,7 @@ public class SearchServlet extends HttpServlet {
 
 	public static void main(String[] args) {
 		try {
-			LuceneUtils.search("dd", 1);
+			LuceneManager.getInstance().search("dd", 1);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.konka.dhtsearch.db.luncene.LuceneAndroidSearchResult;
-import com.konka.dhtsearch.db.luncene.LuceneUtils;
+import com.konka.dhtsearch.db.luncene.LuceneManager;
 import com.konka.dhtsearch.util.ArrayUtils;
 import com.konka.dhtsearch.util.TextUtils;
 
@@ -37,7 +37,7 @@ public class AndroidSearchServlet extends HttpServlet {
 //		int total = 0;
 		List<LuceneAndroidSearchResult> lists = null;
 		try {
-			  lists = LuceneUtils.androidSearch(searchkeywords, currentPage);
+			  lists = LuceneManager.getInstance().androidSearch(searchkeywords, currentPage);
 //			total = luceneSearchResult.getTotal();
 		} catch (Exception e1) {
 			e1.printStackTrace();

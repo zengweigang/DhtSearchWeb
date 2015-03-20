@@ -2,10 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.ServletException;
@@ -13,17 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.konka.dhtsearch.AppManager;
-import com.konka.dhtsearch.Key;
-import com.konka.dhtsearch.Node;
-import com.konka.dhtsearch.bittorrentkad.KadNet;
-import com.konka.dhtsearch.db.luncene.LuceneUtils;
+import com.konka.dhtsearch.db.luncene.LuceneManager;
 
 public class CreateLuceneServlet extends HttpServlet {
 	private static final long serialVersionUID = 5355659034287728426L;
-	public static final List<KadNet> kadNets = new ArrayList<KadNet>();
 	private static final String CREATE = "createIndex";
-	private static final AtomicBoolean starting=new AtomicBoolean(false);
+	private static final AtomicBoolean starting = new AtomicBoolean(false);
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,17 +32,17 @@ public class CreateLuceneServlet extends HttpServlet {
 				+ path + request.getServletPath();
 		System.out.println(basePath);
 		if (action == null || action.trim().length() == 0) {
-			out.print("启动：" + basePath+"?action="+CREATE);
+			out.print("启动：" + basePath + "?action=" + CREATE);
 			out.println("<br>");
-			out.print("停止：" + basePath+"?action=stop");
+			out.print("停止：" + basePath + "?action=stop");
 			out.println("<br>");
-			out.print("查看状态：" + basePath+"?action=state");
+			out.print("查看状态：" + basePath + "?action=state");
 		} else if (action.equals(CREATE)) {// 启动
-			if(!starting.get()){
+			if (!starting.get()) {
 				try {
 					starting.set(true);
 					out.print("开始创建：--");
-					LuceneUtils.createIndex();
+					LuceneManager.getInstance().createIndex();
 					out.print("创建成功：--");
 				} catch (Exception e) {
 					out.print("创建失败：请重试--");
@@ -59,59 +50,8 @@ public class CreateLuceneServlet extends HttpServlet {
 				}
 				starting.set(false);
 			}
-		}  
+		}
 		out.flush();
 		out.close();
-	}
-
-	private boolean checkIsStarting() {
-		if (kadNets != null && kadNets.size() > 0) {
-			for (KadNet kadNet : kadNets) {
-				if (kadNet.isStarting()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	private void start() {
-		InetSocketAddress[] BOOTSTRAP_NODES = { //
-		new InetSocketAddress("router.bittorrent.com", 6881), //
-				new InetSocketAddress("dht.transmissionbt.com", 6881),//
-				new InetSocketAddress("router.utorrent.com", 6881), };
-
-		int size = 3;
-		try {
-			for (int i = 0; i < size; i++) {
-				AppManager.init();// 1---
-				Key key = AppManager.getKeyFactory().generate();
-				Node localNode = new Node(key).setInetAddress(InetAddress.getByName("0.0.0.0")).setPoint(20200 + i);// 这里注意InetAddress.getLocalHost();为空
-
-				KadNet kadNet = new KadNet(null, localNode);
-				kadNet.join(BOOTSTRAP_NODES).create();
-
-				kadNets.add(kadNet);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("启动了吗" + checkIsStarting());
-	}
-
-	private void stop() {
-		if (kadNets != null && kadNets.size() > 0) {
-			for (KadNet kadNet : kadNets) {
-				if (kadNet.isStarting()) {
-					kadNet.shutdown();
-				}
-			}
-			kadNets.removeAll(kadNets);
-		}
-	}
-
-	@Override
-	public void init() throws ServletException {
-		super.init();
 	}
 }

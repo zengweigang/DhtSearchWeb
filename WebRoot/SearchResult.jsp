@@ -27,7 +27,7 @@
 
 <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="../js/jqPaginator.js" type="text/javascript"></script>
- 
+
 </head>
 <body>
 	<div id="wrapper">
@@ -39,12 +39,13 @@
 				</div>
 				<c:forEach items="${searchResultInfo.fileInfos}" var="fileInfo"
 					varStatus="vs">
-					 
+
 					<div class="search-item">
 						<div class="item-title">
 							<a
 								href="DetailsServlet?info_hash=<c:out value="${fileInfo.info_hash}"/>"
-								target="_blank"> <c:out value="${fileInfo.name}" /> </a>
+								target="_blank"> <c:out value="${fileInfo.name}"
+									escapeXml="false" /> </a>
 						</div>
 						<div class="item-list">
 
@@ -62,9 +63,9 @@
 
 						</div>
 						<div class="item-bar">
-							<span class="cpill fileType1">视频</span> <span>创建时间： <b>
-									<c:out value="${fileInfo.createTime}" /> </b> </span><span>文件大小： <b
-								class="cpill yellow-pill"> <!-- 								formatSize --> <c:out
+							<span class="cpill fileType1">${fileInfo.fileType}</span> <span>创建时间：
+								<b> <c:out value="${fileInfo.createTime}" /> </b> </span><span>文件大小：
+								<b class="cpill yellow-pill"> <!-- 								formatSize --> <c:out
 										value="${fileInfo.fileSize}" /> </b> </span><span>文件数：${fileInfo.subFileCount}
 								<b> </b> </span> <a
 								href="magnet:?xt=urn:btih:<c:out value="${fileInfo.info_hash}"/>">磁力链接</a>
