@@ -13,7 +13,7 @@ import com.konka.dhtsearch.db.luncene.LuceneManager;
 
 public class CreateLuceneServlet extends HttpServlet {
 	private static final long serialVersionUID = 5355659034287728426L;
-	private static final String CREATE = "createIndex";
+	private static final String CREATEINDEX = "createIndex";
 	private static final AtomicBoolean starting = new AtomicBoolean(false);
 
 	@Override
@@ -32,12 +32,8 @@ public class CreateLuceneServlet extends HttpServlet {
 				+ path + request.getServletPath();
 		System.out.println(basePath);
 		if (action == null || action.trim().length() == 0) {
-			out.print("启动：" + basePath + "?action=" + CREATE);
-			out.println("<br>");
-			out.print("停止：" + basePath + "?action=stop");
-			out.println("<br>");
-			out.print("查看状态：" + basePath + "?action=state");
-		} else if (action.equals(CREATE)) {// 启动
+			out.print("创建索引：" + basePath + "?action=" + CREATEINDEX);
+		} else if (action.equals(CREATEINDEX)) {// 创建索引
 			if (!starting.get()) {
 				try {
 					starting.set(true);
