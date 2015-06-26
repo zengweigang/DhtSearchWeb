@@ -8,10 +8,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Ã»ÓÐÕÒµ½ - ´ÅÁ¦ËÑË÷</title>
-<meta name="keywords" content="´ÅÁ¦Á´½Ó, ´ÅÁ¦Á´, ´ÅÁ¦ËÑË÷, ´ÅÁ¦Á´½ÓËÑË÷, BTËÑË÷">
+<title>æ²¡æœ‰æ‰¾åˆ° - ç£åŠ›æœç´¢</title>
+<meta name="keywords" content="ç£åŠ›é“¾æŽ¥, ç£åŠ›é“¾, ç£åŠ›æœç´¢, ç£åŠ›é“¾æŽ¥æœç´¢, BTæœç´¢">
 <meta name="description"
-	content="´ÅÁ¦Á´½ÓËÑË÷ÒýÇæbtbook.netË÷ÒýÁËÈ«Çò×îÐÂ×îÈÈÃÅµÄBTÖÖ×ÓÐÅÏ¢ºÍ´ÅÁ¦Á´½Ó£¬Ìá¹©´ÅÁ¦Á´½ÓËÑË÷¡¢BTËÑË÷¡¢ÖÖ×ÓËÑË÷µÈÇ¿´ó¹¦ÄÜ¡£">
+	content="ç£åŠ›é“¾æŽ¥æœç´¢å¼•æ“Žbtbook.netç´¢å¼•äº†å…¨çƒæœ€æ–°æœ€çƒ­é—¨çš„BTç§å­ä¿¡æ¯å’Œç£åŠ›é“¾æŽ¥ï¼Œæä¾›ç£åŠ›é“¾æŽ¥æœç´¢ã€BTæœç´¢ã€ç§å­æœç´¢ç­‰å¼ºå¤§åŠŸèƒ½ã€‚">
 <meta name="viewport" content="width=device-width">
 
 <link type="text/css" rel="stylesheet" href="../css/default.css">
@@ -19,7 +19,7 @@
 <script src="../js/default.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="../css/embed.bluebox.css">
 <body>
-	<div id="wrapper">
+	<div id="wrapper">    
 		<jsp:include page="header.jsp" />
 
 		<div id="content">
@@ -29,7 +29,7 @@
 					<img src="../assets/404.jpg">
 					<div style="position: absolute;left:268px;top:90px;">
 						<p class="error">
-							Error 404<span>±§Ç¸£¬ÄúÒª·ÃÎÊµÄÒ³Ãæ²»´æÔÚ</span>
+							Error 404<span>æŠ±æ­‰ï¼Œæ‚¨è¦è®¿é—®çš„é¡µé¢ä¸å­˜åœ¨</span>
 						</p>
 					</div>
 				</div>
@@ -52,6 +52,7 @@ p.error span {
 	</div>
 
 	<jsp:include page="footer.jsp" />
-
+  
+  
 </body>
 </html>
